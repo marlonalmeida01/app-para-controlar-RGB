@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle RGB do Headset Gamer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        .control-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+        }
+        
+        input[type="color"] {
+            width: 50px;
+            height: 50px;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Controle RGB do Headset Gamer</h1>
+        <div class="control-group">
+            <label for="red">Vermelho:</label>
+            <input type="range" id="red" min="0" max="255" value="0">
+        </div>
+        <div class="control-group">
+            <label for="green">Verde:</label>
+            <input type="range" id="green" min="0" max="255" value="0">
+        </div>
+        <div class="control-group">
+            <label for="blue">Azul:</label>
+            <input type="range" id="blue" min="0" max="255" value="0">
+        </div>
+        <div class="control-group">
+            <label for="colorPicker">Escolher cor:</label>
+            <input type="color" id="colorPicker" value="#000000">
+        </div>
+    </div>
+
+    <script>
+        const redSlider = document.getElementById('red');
+        const greenSlider = document.getElementById('green');
+        const blueSlider = document.getElementById('blue');
+        const colorPicker = document.getElementById('colorPicker');
+
+        redSlider.addEventListener('input', updateColor);
+        greenSlider.addEventListener('input', updateColor);
+        blueSlider.addEventListener('input', updateColor);
+        colorPicker.addEventListener('input', setColorFromPicker);
+
+        function updateColor() {
+            const redValue = redSlider.value;
+            const greenValue = greenSlider.value;
+            const blueValue = blueSlider.value;
+            const color = `rgb(${redValue}, ${greenValue}, ${blueValue})`;
+            colorPicker.value = color;
+            applyColor(color);
+        }
+
+        function setColorFromPicker() {
+            const color = colorPicker.value;
+            const [red, green, blue] = hexToRgb(color);
+            redSlider.value = red;
+            greenSlider.value = green;
+            blueSlider.value = blue;
+            applyColor(color);
+        }
+
+        function applyColor(color) {
+            // Aqui você pode adicionar a lógica para enviar o comando de mudança de cor para o seu headset gamer
+            // Por exemplo, você pode usar uma API de comunicação com o dispositivo ou algum outro método específico.
+            // Esta função apenas simula a mudança de cor, você precisará substituí-la com a lógica real.
+            document.body.style.backgroundColor = color;
+        }
+
+        function hexToRgb(hex) {
+            const bigint = parseInt(hex.slice(1), 16);
+            const red = (bigint >> 16) & 255;
+            const green = (bigint >> 8) & 255;
+            const blue = bigint & 255;
+            return [red, green, blue];
+        }
+    </script>
+</body>
+
+</html>
